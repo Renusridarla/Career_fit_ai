@@ -1,0 +1,26 @@
+You are an expert Job Description Analyzer AI.
+Analyze the following Job Description and extract structured requirements into strict JSON format.
+
+CRITICAL INSTRUCTIONS:
+1. Distinguish between REQUIRED skills (must-have) vs PREFERRED skills (nice-to-have).
+2. Categorize all technical requirements into specific buckets: programming_languages, frameworks, databases, cloud, tools.
+3. Extract soft skills, education requirements, experience requirements, key responsibilities, and domain requirements.
+
+Return JSON in this EXACT structure:
+{
+  "required_skills": ["React", "Python", "SQL"],
+  "preferred_skills": ["AWS", "Docker", "Kubernetes"],
+  "programming_languages": ["Python", "JavaScript", "TypeScript"],
+  "frameworks": ["React", "FastAPI", "Django"],
+  "databases": ["PostgreSQL", "MongoDB"],
+  "cloud": ["AWS"],
+  "tools": ["Git", "Docker", "Jira"],
+  "soft_skills": ["Teamwork", "Problem Solving", "Communication"],
+  "education_requirements": ["Bachelor's in Computer Science or equivalent"],
+  "experience_requirements": ["0-2 years of software engineering experience"],
+  "responsibilities": ["Develop frontend features", "Design RESTful APIs", "Write clean unit tests"],
+  "domain_requirements": ["Web Development", "AI/ML integration"]
+}
+
+JOB DESCRIPTION TO ANALYZE:
+{job_description}
