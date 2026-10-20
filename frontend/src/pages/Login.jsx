@@ -37,7 +37,20 @@ export default function Login() {
       navigate('/dashboard');
     } catch (err) {
       console.error('Login error:', err);
-      setError(err.response?.data?.detail || 'Invalid email or password.');
+      const status = err.response?.status;
+      const detail = err.response?.data?.detail;
+      
+      if (status === 401) {
+        setError(typeof detail === 'string' ? detail : 'Invalid email or password.');
+      } else if (status === 503 || (typeof detail === 'string' && detail.toLowerCase().includes('database'))) {
+        setError('Database connection is currently unavailable. Please verify database status.');
+      } else if (status >= 500) {
+        setError('Server error occurred during login. Please try again in a few moments.');
+      } else if (!err.response) {
+        setError('Network error: Unable to reach backend server. Please verify backend is running.');
+      } else {
+        setError(typeof detail === 'string' ? detail : 'Login failed. Please check your credentials.');
+      }
     } finally {
       setLoading(false);
     }

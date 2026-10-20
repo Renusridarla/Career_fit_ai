@@ -42,12 +42,20 @@ export default function Register() {
       navigate('/dashboard');
     } catch (err) {
       console.error('Registration error:', err);
-      const detail = err.response?.data?.detail || '';
-      if (detail.toLowerCase().includes('already exists') || detail.toLowerCase().includes('in use')) {
+      const status = err.response?.status;
+      const detail = err.response?.data?.detail;
+      
+      if (status === 400 && typeof detail === 'string' && (detail.toLowerCase().includes('already exists') || detail.toLowerCase().includes('in use'))) {
         setError('An account with this email already exists. Please log in instead.');
         setIsExistingUser(true);
+      } else if (status === 503 || (typeof detail === 'string' && detail.toLowerCase().includes('database'))) {
+        setError('Database connection is currently unavailable. Please verify database status.');
+      } else if (status >= 500) {
+        setError('Server error occurred during registration. Please try again in a few moments.');
+      } else if (!err.response) {
+        setError('Network error: Unable to reach backend server. Please check your connection.');
       } else {
-        setError(detail || 'Registration failed. Email may already be in use.');
+        setError(typeof detail === 'string' ? detail : 'Registration failed. Please try again.');
       }
     } finally {
       setLoading(false);
