@@ -1,6 +1,5 @@
 import math
 import re
-import numpy as np
 from typing import List, Dict, Set
 
 def tokenize_and_vectorize(text: str) -> Dict[str, float]:
